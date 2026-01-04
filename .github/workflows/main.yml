@@ -23,6 +23,15 @@ jobs:
       run: |
         docker build -t ${{ secrets.DOCKER_IMAGE }}:${{ github.sha }} .
 
+    - name: Setup kubectl
+      run: |
+          curl -LO https://dl.k8s.io/release/v1.29.0/bin/linux/amd64/kubectl
+          chmod +x kubectl
+          sudo mv kubectl /usr/local/bin/
+
+    - name: Deploy to Kubernetes
+      run: kubectl apply -f k8s/deployment.yaml
+
     - name: Push Docker image
       run: |
         docker push ${{ secrets.DOCKER_IMAGE }}:${{ github.sha }}
