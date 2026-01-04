@@ -21,8 +21,8 @@ jobs:
 
     - name: Build Docker image
       run: |
-        docker build -t ${{ secrets.DOCKER_IMAGE }}:latest .
+        docker build -t ${{ secrets.DOCKER_IMAGE }}:${{ github.sha }} .
 
     - name: Push Docker image
       run: |
-        docker push ${{ secrets.DOCKER_IMAGE }}:latest
+        docker push ${{ secrets.DOCKER_IMAGE }}:${{ github.sha }}
